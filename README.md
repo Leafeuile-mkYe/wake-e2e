@@ -9,7 +9,7 @@ This repository contains the trained model of the paper and one FAST.Farm case, 
 prediction and the reference field can be inspected directly. Nothing else is redistributed.
 
 ```
-models/p1_rss.pt   trained parameters, 4 609 in total (PyTorch state dict)
+models/p1_rss.pt   trained parameters, 4 609 in total
 data/P1_L08_C1.npz one FAST.Farm case: time-mean hub-height field
 ```
 
@@ -39,9 +39,18 @@ in the case matrix (Table 3). The field was produced with FAST.Farm v5.0.0.
 
 ## Using the parameters
 
-The state dict expects `torch.nn.Linear` layers of shape 5→64→64→1 with `tanh` activations between
-them, and the inputs are normalised as described in Section 3.4 of the paper. The evaluation scripts,
-and the remaining cases, are available from the corresponding author on request.
+The file is a Python dictionary:
+
+| key | content |
+|---|---|
+| `state_dict` | `mlp.0` 5→64, `mlp.2` 64→64, `mlp.4` 64→1, with `tanh` between the layers |
+| `hidden` | 64 |
+| `n_cond` | 3 |
+| `u_ref` | 11.4 (m/s, the speed used to normalise the inflow) |
+| `steps` | 40 000 |
+
+The inputs are normalised as described in Section 3.4 of the paper. The evaluation scripts, and the
+remaining cases, are available from the corresponding author on request.
 
 ## Licence
 
