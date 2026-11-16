@@ -11,7 +11,19 @@ prediction and the reference field can be inspected directly. Nothing else is re
 ```
 models/p1_rss.pt   trained parameters, 4 609 in total
 data/P1_L08_C1.npz one FAST.Farm case: time-mean hub-height field
+predict.py         loads the parameters and evaluates them on that case
 ```
+
+Run it with
+
+```bash
+python -m pip install numpy torch
+python predict.py                 # prints the error of Table 6 for this case
+python predict.py --png cmp.png   # also writes a model/reference comparison
+```
+
+On the released case the script reproduces the published value, 0.247 m/s or 2.2 % of the inflow
+velocity.
 
 ## The model
 
@@ -43,14 +55,16 @@ The file is a Python dictionary:
 
 | key | content |
 |---|---|
-| `state_dict` | `mlp.0` 5→64, `mlp.2` 64→64, `mlp.4` 64→1, with `tanh` between the layers |
+| `state_dict` | `mlp.0` 5→64, `mlp.2` 64→64, `mlp.4` 64→1, with SiLU between the layers |
 | `hidden` | 64 |
 | `n_cond` | 3 |
 | `u_ref` | 11.4 (m/s, the speed used to normalise the inflow) |
 | `steps` | 40 000 |
 
-The inputs are normalised as described in Section 3.4 of the paper. The evaluation scripts, and the
-remaining cases, are available from the corresponding author on request.
+The output of the last layer is passed through a softplus and clipped at 0.75, which gives the
+deficit of one turbine; the deficits of the nine turbines are then composed by the fixed
+root-sum-square rule and subtracted from the inflow. The inputs are normalised as described in
+Section 3.4 of the paper. The remaining cases are available from the corresponding author on request.
 
 ## Licence
 
