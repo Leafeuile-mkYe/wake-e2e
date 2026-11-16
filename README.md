@@ -1,8 +1,10 @@
 # wake-e2e — trained model and a reference case
 
+This repository is created by Dr. Maokun Ye @ Shanghai, China
+
 Released with
 
-> Ye, M., Wei, D., Wang, N., Wan, D. *A physics-aware end-to-end data-driven framework for
+> Ye, M, et.al. *A physics-aware end-to-end data-driven framework for
 > efficient and accurate wind-turbine wake prediction in large wind farms.*
 
 This repository contains the trained model of the paper and one FAST.Farm case, so that the
